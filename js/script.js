@@ -14,38 +14,98 @@ Ogni volta che cambio mese dovrò:
 
 $(document).ready(function() {
 
+
+      var baseDate = moment({
+        date: 1,
+        month: 0,
+        year: 2018
+      });
+      printMonth(baseDate);
+      printHolidays(baseDate);
+
+      $(".next").click(function(){
+        var thisMonth = $(".month").attr("data-this-month");
+        var momentThisMonth = moment(thisMonth)
+        var nextMonth = momentThisMonth.add(1,"months");
+        printMonth(nextMonth);
+        printHolidays(nextMonth);
+      });
+
+      $(".prev").click(function(){
+        alert("lama")
+      })
+
+
+});
+
+
+
+// FUNCTIONS
+
+// FUNCTION: printMonth();
+// Questa funzione stampa tutti gioni compresi in un mese.
+//   --> baseDate: questo argomento deve essere un elemento
+//       MOMENT in formato (YYYY-MM-DD)
+function printMonth(baseDate){
+$(".month").text(baseDate.format("MMMM YYYY"));
+  //Quantita di giorni compresi in un mese.
+  var daysInMonth = baseDate.daysInMonth();
+
+  var source = $("#day-template").html();
+  var template = Handlebars.compile(source);
+
+  //Ciclo FOR per stampare tutti giorni del mese.
+  for(var i = 1; i <= daysInMonth; i++){
+    var currentDay = moment({
+      name: "",
+      date: i,
+      month: baseDate.month(),
+      year: baseDate.year(),
+    });
+    var context = {
+      // Giorno da stampare.
+      date: currentDay.format("dd D"),
+      // Attributo da stampare (nello stesso formato API dei giorni festivi.)
+      day_attr: currentDay.format("YYYY-MM-DD")
+    };
+    var html = template(context);
+    $('.wrapper-days').append(html);
+    }
+  };
+
+// FUNCTION: printHolidays();
+// Questa funzione stampa tutti gioni festivi compresi in un mese.
+//   --> baseDate: questo argomento deve essere un elemento
+//       MOMENT in formato (YYYY-MM-DD)
+function printHolidays(baseDate){
   $.ajax(
     {
       url: 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0',
       method: 'GET',
+      data: {
+        year: baseDate.year(),
+        month: baseDate.month(),
+      },
       success: function(data){
+        var holidays = data.response;
 
-        console.log(data.response[1])
-        
-        var meseDelAnno = 2018 + "-" + 1
-        var giorniNelMese = moment(meseDelAnno, "YYYY-MM").daysInMonth();
-        // console.log(moment(giorniNelMese));
-
-        for(var i = 1; i <= giorniNelMese; i++){
-          // var gg = moment("2018-01-01").format('D');
-          var template = $('.template').find('.giorno').clone();
-          template.text(i);
-          $('.wrapper').append(template);
-      }
-           // Appendere TEMPLATE HTML nel Elemento desiderato.
+        // Ciclo FOR per individuare ogni "giorno festivo",
+        for(var i = 0; i < holidays.length; i++){
+          var currentHolidays = holidays[i];
+          // che combaccia con il Attributo che ha ogni giorno.
+          var  thisDate = $('.number-day[attr-current-data="' + currentHolidays.date + '"]');
+          // Aggiunge Class Holyday.
+          thisDate.parent().addClass("holyday");
+          // Aggiunge Name Holyday.
+          thisDate.siblings().append(currentHolidays.name);
 
 
-
-
-         // }
-
+        }
       },
       error: function(richiesta, stato, errore){
           alert('ERROR');
       }
-    }
+      }
   );
 
-
-
-});
+};

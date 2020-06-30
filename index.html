@@ -6,30 +6,37 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://momentjs.com/downloads/moment.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 
         <link rel="stylesheet" href="css/style.css">
     <title>AJAX|EX|CALENDAR</title>
   </head>
   <body>
     <div class="header">
-      <span><<</span>
-      <div class="mese">
-        GENNAIO
+      <span class="prev"><i class="fas fa-arrow-circle-left"></i></span>
+      <div class="wrapper-month">
+        <div data-this-month="2018-01-01" class="month">
+
+        </div>
       </div>
-      <span>>></span>
+      <span class="next"><i class="fas fa-arrow-circle-right"></i></i></span>
     </div>
 
-    <div class="wrapper">
+    <div class="wrapper-days">
+
 
     </div>
 
     <!-- TEMPLATE -->
-    <div class="template hidden">
-      <div class="giorno">
-        <span> {{ name }} </span>
+
+
+    <script id="day-template"  type="text/x-handlebars-template">
+      <div class="box-day">
+        <div attr-current-data="{{ day_attr }}" class="number-day">{{ date }}</div>
+        <div class="name-holyday"></div>
 
       </div>
-    </div>
+    </script>
     <!-- END TEMPLATE -->
 
     <!-- SCRIPT -->

@@ -7,17 +7,17 @@
 /* END RESET */
 body {
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
   background: lightblue;
 }
 .header {
+  font-size: 40px;
   display: flex;
   justify-content: space-around;
 }
 .hidden {
   display: none;
 }
-.wrapper {
+.wrapper-days {
   display: flex;
   flex-wrap: wrap;
   height: calc(100vh - 100px);
@@ -28,19 +28,39 @@ body {
   box-shadow: 10px 10px 5px  0px rgba(0,0,0,0.75);
   background: white;
 }
-.mese {
+.month {
   background: pink;
   border: 1px solid black;
   box-shadow: 10px 10px 5px  0px rgba(0,0,0,0.75);
   width: 500px;
   text-align: center;
 }
-.giorno {
+.box-day {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: calc(100% / 7);
   height: calc(100% / 5);
   background: lightgreen;
   border: 1px solid black;
+}
+.boxes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% / 7);
+  height: calc(100% / 5);
+  background: red;
+  border: 1px solid black;
+}
+.holyday {
+  background: pink;
+}
+.name-holyday {
+  font-size: 10px;
+}
+.number-day {
+  font-size: 30px;
 }
