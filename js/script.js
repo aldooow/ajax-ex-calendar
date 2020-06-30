@@ -24,15 +24,24 @@ $(document).ready(function() {
       printHolidays(baseDate);
 
       $(".next").click(function(){
-        var thisMonth = $(".month").attr("data-this-month");
+        $(".box-day").html("");
+        $(".box-day").addClass("hidden")
+        var thisMonth = $("h2").attr("data-this-month");
         var momentThisMonth = moment(thisMonth)
-        var nextMonth = momentThisMonth.add(1,"months");
+        var nextMonth = momentThisMonth.add(1,'months');
+
         printMonth(nextMonth);
         printHolidays(nextMonth);
       });
 
       $(".prev").click(function(){
-        alert("lama")
+        $(".wrapper-days").html("");
+        var thisMonth = $("h2").attr("data-this-month");
+        var momentThisMonth = moment(thisMonth)
+        var nextMonth = momentThisMonth.subtract(1,'months');
+
+        printMonth(nextMonth);
+        printHolidays(nextMonth);
       })
 
 
@@ -45,9 +54,10 @@ $(document).ready(function() {
 // FUNCTION: printMonth();
 // Questa funzione stampa tutti gioni compresi in un mese.
 //   --> baseDate: questo argomento deve essere un elemento
-//       MOMENT in formato (YYYY-MM-DD)
+//       MOMENT in formato (YYYY-MM-DD) che rappresenta il primo giono del mes.
 function printMonth(baseDate){
 $(".month").text(baseDate.format("MMMM YYYY"));
+$(".month").attr("data-this-month", baseDate.format("YYYY-MM-DD"))
   //Quantita di giorni compresi in un mese.
   var daysInMonth = baseDate.daysInMonth();
 
