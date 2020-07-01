@@ -24,14 +24,19 @@ $(document).ready(function() {
       printHolidays(baseDate);
 
       $(".next").click(function(){
-        $(".box-day").html("");
-        $(".box-day").addClass("hidden")
+        $(".wrapper-days").html("");
         var thisMonth = $("h2").attr("data-this-month");
         var momentThisMonth = moment(thisMonth)
         var nextMonth = momentThisMonth.add(1,'months');
 
-        printMonth(nextMonth);
-        printHolidays(nextMonth);
+        if(momentThisMonth.year()==2018){
+          printMonth(nextMonth);
+          printHolidays(nextMonth);
+        }else{
+          alert("Possiamo vedere soltanto il anno 2018.")
+          printMonth(baseDate);
+          printHolidays(baseDate);
+        }
       });
 
       $(".prev").click(function(){
@@ -40,8 +45,15 @@ $(document).ready(function() {
         var momentThisMonth = moment(thisMonth)
         var nextMonth = momentThisMonth.subtract(1,'months');
 
-        printMonth(nextMonth);
-        printHolidays(nextMonth);
+        if(momentThisMonth.year()==2018){
+          printMonth(nextMonth);
+          printHolidays(nextMonth);
+        }else{
+          alert("Possiamo vedere soltanto il anno 2018.")
+          printMonth(baseDate);
+          printHolidays(baseDate);
+        }
+
       })
 
 
